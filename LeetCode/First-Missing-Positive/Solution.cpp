@@ -1,13 +1,9 @@
-class Solution:
-    def firstMissingPositive(self, A):
-        n = len(A)
-        
-        for i in range(n):
-            while 1 <= A[i] <= n and A[A[i] - 1] != A[i]:
-                A[A[i] - 1], A[i] = A[i], A[A[i] - 1]
-        
-        for i in range(n):
-            if A[i] != i + 1:
-                return i + 1
-        
-        return n + 1
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int i = 1;
+        for(int x: nums) if(x == i) i++;
+        return i;
+    }
+};
