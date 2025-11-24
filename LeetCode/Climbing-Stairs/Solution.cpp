@@ -1,18 +1,16 @@
 class Solution {
 public:
-   
-    int climbStairs(int n) {
-        
-        
-        int curr,next=1,next2=0;
-       
-        for(int i=n-1;i>=0;i--)
-        {
-            curr=next+next2;
-            next2=next;
-            next=curr;
-        }
+int count(int i,vector<int>&dp)
+{
+    if(i<=1)
+    return 1;
 
-       return curr;
+    if(dp[i]!=-1)
+    return dp[i];
+     return dp[i]=count(i-1,dp)+count(i-2,dp);
+}
+    int climbStairs(int n) {
+        vector<int>dp(n+1,-1);
+        return count(n,dp);
     }
 };
