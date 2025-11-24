@@ -1,16 +1,18 @@
 class Solution {
 public:
-    int rob(vector<int>& nums) {
-        int n = nums.size();
-        int next = 0;    // dp[i+1]
-        int next2 = 0;   // dp[i+2]
-        int curr = 0;    // dp[i]
+int rob1(vector<int>& nums,int i,int n,vector<int> & dp)
+{
+    if (i >= n) return 0;     
+    if (dp[i] != -1) return dp[i];      
+    int inc = nums[i] + rob1(nums, i + 2,n, dp); 
+    int exc = rob1(nums, i + 1,n, dp);           
 
-        for (int i = n - 1; i >= 0; i--) {
-            curr = max(nums[i] + next2, next); // rob or skip
-            next2 = next;
-            next = curr;
-        }
-        return curr;
+    dp[i] = max(inc, exc);      
+    return dp[i];
+}
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> dp(n,-1);
+        return rob1(nums,0,n,dp);
     }
 };
