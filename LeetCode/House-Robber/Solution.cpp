@@ -1,17 +1,14 @@
 class Solution {
 public:
-    int help(int i,int n,vector<int>& dp,vector<int>& nums)
-    {
-        if(i>=n)
-        return 0;
-        if(dp[i]!=-1)
-        return dp[i];
-        return dp[i]=max((nums[i]+help(i+2,n,dp,nums)),help(i+1,n,dp,nums));
-    }
     int rob(vector<int>& nums) {
         int  n=nums.size();
-      vector<int>dp(n+1,-1);
-     return help(0,n,dp,nums);
+      vector<int>dp(n+2,-1);
+      dp[n]=0,dp[n+1]=0;
+      for(int i=n-1;i>=0;i--)
+      {
+        dp[i]=max((nums[i]+dp[i+2]),dp[i+1]);
+      }
+     return dp[0];
 
     }
 };
