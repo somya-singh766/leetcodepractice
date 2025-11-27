@@ -1,23 +1,24 @@
 1class Solution {
 2public:
-3     int find(int n,int m,string &s1, string &s2, vector<vector<int>>&dp)
-4    {
-5        if(n==0 || m==0)
-6        return 0;
-7        if(dp[n][m]!=-1)
-8        return dp[n][m];
-9        if(s1[n-1]==s2[m-1])
-10        {
-11            return dp[n][m]= 1+find(n-1,m-1,s1,s2,dp);
-12        }
-13        else{
-14            return dp[n][m]=max(find(n-1,m,s1,s2,dp),find(n,m-1,s1,s2,dp));
-15        }
-16    }
-17    int longestCommonSubsequence(string text1, string text2) {
-18         int n=text1.size();
-19        int m=text2.size();
-20        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-21        return find(n,m,text1,text2,dp);
-22    }
-23};
+3     
+4    int longestCommonSubsequence(string text1, string text2) {
+5         int n=text1.size();
+6        int m=text2.size();
+7        vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+8        for(int i=1;i<=n;i++)
+9        {
+10            for(int j=1;j<=m;j++)
+11            {
+12                if(text1[i-1]==text2[j-1])
+13               {
+14                 dp[i][j]= 1+dp[i-1][j-1];
+15               }
+16               else
+17               {
+18                   dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+19                }
+20            }
+21        }
+22        return dp[n][m];
+23    }
+24};
