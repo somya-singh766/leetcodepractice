@@ -1,0 +1,34 @@
+1class Solution {
+2public:
+3    int divide(int dividend, int divisor) {
+4        if(dividend==divisor) return 1;
+5        if (dividend == INT_MIN && divisor == -1)
+6               return INT_MAX;
+7        bool sign=true;  // +ve
+8
+9        if(dividend>=0 && divisor<0) sign=false;
+10        if(dividend<=0 && divisor>0) sign=false;
+11        long n = labs((long)dividend);
+12        long d = labs((long)divisor);
+13
+14
+15        long ans=0;
+16
+17        while(n>=d){
+18            int cnt=0;
+19            while(n>=(d<<(cnt+1))){
+20                cnt++;
+21            }
+22            ans+=1<<cnt;
+23            n=n-(d<<cnt);
+24        }
+25        if (ans > INT_MAX) {
+26            return sign ? INT_MAX : INT_MIN;
+27        }
+28
+29        return sign? ans : -ans;
+30
+31
+32
+33    }
+34};
