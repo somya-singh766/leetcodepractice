@@ -1,19 +1,48 @@
-class Solution {
-public:
-    int solve(int i,int amount, vector<int>& coins,int n,vector<vector<int>>&dp)
-    {
-        if(amount==0)
-        return 1;
-        if(amount<0 || i>=n)
-        return 0;
-        if(dp[i][amount]!=-1)
-        return dp[i][amount];
-        return dp[i][amount]=solve(i,amount-coins[i],coins,n,dp)+solve(i+1,amount,coins,n,dp);
-    }
-    int change(int amount, vector<int>& coins) {
-     int n=coins.size();
-             vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
-
-     return solve(0,amount,coins,n,dp);
-    }
-};
+1class Solution {
+2public:
+3     static const long long MOD = 1000000007;
+4    // int ways(int index , int n, int amount , vector<int>&coins,vector<vector<int>>&dp){
+5    //     if(amount==0){
+6    //         return 1;
+7    //     }
+8    //     if(index>=n|| amount<0) return 0;
+9    //     if(dp[index][amount]!=-1) return dp[index][amount];
+10    //     return  dp[index][amount]=ways(index,n,amount-coins[index],coins,dp)+ways(index+1,n,amount,coins,dp);
+11    // }
+12int change(int amount, vector<int>& coins) {
+13        int n = coins.size();
+14        vector<vector<unsigned long long>> dp(n + 1, vector<unsigned long long>(amount + 1, 0));
+15
+16        for(int i = 0; i <= n; i++){
+17            dp[i][0] = 1;
+18        }
+19
+20        for(int i = n - 1; i >= 0; i--){
+21            for(int j = 0; j <= amount; j++){
+22                unsigned long long not_take = dp[i + 1][j];
+23                unsigned long long take = 0;
+24                if(j - coins[i] >= 0) 
+25                    take = dp[i][j - coins[i]];
+26                
+27                dp[i][j] = (take + not_take);
+28            }
+29        }
+30
+31        return dp[0][amount];
+32
+33
+34
+35
+36        // vector<unsigned long long> dp(amount + 1, 0);
+37        // dp[0] = 1;
+38
+39        // for (int c : coins) {
+40        //     for (int j = c; j <= amount; j++) {
+41        //         dp[j] = (dp[j] + dp[j - c]);
+42        //     }
+43        // }
+44
+45        // return dp[amount];
+46    }
+47
+48};
