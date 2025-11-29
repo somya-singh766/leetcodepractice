@@ -1,0 +1,13 @@
+1class Solution {
+2public:
+3    int xorOperation(int n, int start) {
+4        int x=0;
+5        int a=start;
+6        for(int i=1;i<=n;i++){
+7            x^=a;
+8            a=start+2*i;
+9
+10        }
+11        return x;
+12    }
+13};
