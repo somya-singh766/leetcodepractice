@@ -1,0 +1,16 @@
+1class Solution {
+2public:
+3    int countElements(vector<int>& nums, int k) {
+4        sort(nums.begin(),nums.end());
+5        int n=nums.size();
+6        int cnt=0;
+7        if(k==0) return n;
+8        int index=n-k-1;
+9        if(index<0) return 0;
+10        int a=nums[index];
+11        for(int i:nums){
+12            if(i<nums[n-k])cnt++;
+13        }
+14        return cnt;
+15    }
+16};
