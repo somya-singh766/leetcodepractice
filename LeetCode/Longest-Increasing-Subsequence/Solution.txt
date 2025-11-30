@@ -1,0 +1,36 @@
+1class Solution {
+2public:
+3    int lengthOfLIS(vector<int>& nums) {
+4         int n=nums.size();
+5        vector<int>arr1(n);
+6        arr1[0]=nums[0];
+7        int start,end,mid,index,size=0;
+8        for(int i=0;i<n;i++)
+9        {
+10            start=0,end=size,index=size+1;
+11            while(start<=end)
+12            {
+13                mid=start+(end-start)/2;
+14                if(arr1[mid]>nums[i])
+15                {
+16                    index=mid;
+17                    end=mid-1;
+18                }
+19                else if(arr1[mid]==nums[i])
+20                {
+21                    index=mid;
+22                    break;
+23                }
+24                else{
+25                    
+26                    start=mid+1;
+27                    
+28                }
+29                
+30            }
+31            arr1[index]=nums[i];
+32            size=max(size,index);
+33        }
+34        return size+1;
+35    }
+36};
