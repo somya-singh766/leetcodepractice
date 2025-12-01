@@ -1,26 +1,21 @@
-class Solution {
-public:
-    
-    int uniquePaths(int m, int n) {
-        vector<vector<int>>dp(m,vector<int>(n,-1));
-        
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            { 
-              if(i==0 && j==0)
-              dp[0][0]=1;
-              else{
-                int up=0,left=0;
-              if(i>0) 
-              { up=dp[i-1][j];}
-              if(j>0){
-                 left=dp[i][j-1];
-              }
-              dp[i][j]=up+left;
-              }}
-            }
-        
-        return dp[m-1][n-1];
-    }
-};
+1class Solution {
+2public:
+3    int ways(int i,int j,int m,int n,vector<vector<int>> &dp)
+4    {
+5        if(i==m-1 && j==n-1)
+6        return 1;
+7        if(dp[i][j]!=-1)
+8        return dp[i][j];
+9        int down=0,right=0;
+10        if(j<n-1)
+11        right=ways(i,j+1,m,n,dp);
+12        if(i<m-1)
+13        down=ways(i+1,j,m,n,dp);
+14        return dp[i][j]=right+down;
+15        
+16    }
+17    int uniquePaths(int m, int n) {
+18         vector<vector<int>>dp(m,vector<int>(n,-1));
+19        return ways(0,0,m,n,dp);
+20    }
+21};
