@@ -1,0 +1,33 @@
+1class Solution {
+2public:
+3    int countPartitions(vector<int>& nums, int k) {
+4        const int mod = 1e9 + 7;
+5        int n = (int)nums.size();
+6        int P[n];
+7        multiset<int> S;
+8        for(int r = 0, l = 0; r < n; r ++){
+9            S.insert(nums[r]);
+10            while(*prev(S.end()) - *S.begin() > k){
+11                S.erase(S.find(nums[l]));
+12                l += 1;
+13            }
+14            P[r] = l;
+15        }
+16
+17        int dp[n + 1];
+18        int psum[n + 1];
+19        
+20        dp[0]   = 1;
+21        psum[0] = 1;
+22        for(int r = 0; r < n; r ++){
+23            int l = P[r];
+24            int rangedp = psum[r];
+25            if(l > 0) rangedp -= psum[l - 1];
+26            rangedp %= mod;
+27            if(rangedp < 0) rangedp += mod;
+28            dp[r + 1]   = rangedp;
+29            psum[r + 1] = (psum[r] + dp[r + 1]) % mod;
+30        }
+31        return dp[n];
+32    }
+33};
