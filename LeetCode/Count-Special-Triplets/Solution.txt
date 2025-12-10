@@ -1,0 +1,16 @@
+1class Solution {
+2public:
+3    int specialTriplets(vector<int>& nums) {
+4        const int mod = 1e9 + 7;
+5        unordered_map<int, int> suffix;
+6        unordered_map<int, int> prefix;
+7        for(auto x : nums) suffix[x] += 1;
+8        long long ans = 0;
+9        for(auto x : nums){
+10            suffix[x] -= 1;
+11            ans += (long long)prefix[2 * x] * suffix[2 * x];
+12            prefix[x] += 1;
+13        }
+14        return ans % mod;
+15    }
+16};
