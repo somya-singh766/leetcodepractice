@@ -1,0 +1,40 @@
+1class Solution {
+2public:
+3    bool isVowel(char c){
+4        return c=='a'||c=='e'||c=='i'||c=='o'||c=='u';
+5    }
+6    int count(string w){
+7        int cnt=0;
+8        for(char c:w){
+9            if(isVowel(c))cnt++;
+10        }
+11        return cnt;
+12    }
+13    string reverseWords(string s) {
+14        vector<string>w;
+15        string temp="";
+16        for(char c:s){
+17            if(c==' '){
+18                w.push_back(temp);
+19                temp="";
+20            }
+21            else{
+22                temp+=c;
+23            }
+24        }
+25        w.push_back(temp);
+26
+27        int f=count(w[0]); // pehle char ko check ki vowel or not
+28        for(int i=1;i<w.size();i++){
+29            if(count(w[i])==f){
+30                reverse(w[i].begin(),w[i].end());
+31            }
+32        }
+33        string ans="";
+34        for(int i=0;i<w.size();i++){
+35            if(i>0)ans+=" ";
+36            ans+=w[i];
+37        }
+38        return ans;
+39    }
+40};
