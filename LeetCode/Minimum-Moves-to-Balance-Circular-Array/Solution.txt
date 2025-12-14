@@ -1,0 +1,53 @@
+1class Solution {
+2public:
+3    long long minMoves(vector<int>& balance) {
+4        int n=balance.size();
+5        long long sum=0;
+6        int negative=-1;
+7        for(int i=0;i<n;i++){
+8            sum+=balance[i];
+9            if(balance[i]<0) negative=i;
+10        }
+11        if(sum<0) return -1;
+12        if(negative==-1) return 0;
+13        long long need=-balance[negative];
+14        // long long c=0,cw=0;
+15        // long long r=need;
+16        // for(int i=1;i<n&&r>0;i++){
+17        //     int id=(negative+i)%n;
+18        //     if(balance[id]>0){
+19        //         long long w=min((long long)balance[id],r);
+20        //         cw+=w*i;
+21        //         r-=w;
+22        //     }
+23        // }
+24        // r=need;
+25        // for(int i=1;i<n&&r>0;i++){
+26        //     int id=(negative-i+n)%n;
+27        //     if(balance[id]>0){
+28        //         long long w=min((long long)balance[id],r);
+29        //         c+=w*i;
+30        //         r-=w;
+31        //     }
+32            
+33        // }
+34        // return min(c,cw);
+35        long long ans=0;
+36        for(int i=1;i<n&&need>0;i++){
+37            int l=(negative-i+n)%n;
+38            if(balance[l]>0&&need>0){
+39                long long w=min((long long)balance[l],need);
+40                ans+=w*i;
+41                need-=w;
+42            }
+43            int r=(negative+i)%n;
+44            if(balance[r]>0&&need>0){
+45                long long w=min((long long)balance[r],need);
+46                ans+=w*i;
+47                need-=w;
+48            
+49            }
+50        }
+51        return ans;
+52    }
+53};
