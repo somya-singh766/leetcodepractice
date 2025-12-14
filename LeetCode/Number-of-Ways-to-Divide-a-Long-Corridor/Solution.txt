@@ -1,0 +1,21 @@
+1class Solution {
+2public:
+3    const int mod = 1e9 + 7;
+4    int numberOfWays(string corridor) {
+5        vector<int> pos;
+6        for (int i = 0; i < corridor.size(); i++) {
+7            if (corridor[i] == 'S') {
+8                pos.push_back(i);
+9            }
+10        } 
+11        if (pos.size() % 2 or pos.size() == 0) {
+12            return 0;
+13        } 
+14        long res = 1;
+15        for (int i = 2; i < pos.size(); i += 2) {
+16            int len_of_gap = pos[i] - pos[i - 1];
+17            res = (res * len_of_gap) % mod;
+18        }
+19        return res;
+20    }
+21};
