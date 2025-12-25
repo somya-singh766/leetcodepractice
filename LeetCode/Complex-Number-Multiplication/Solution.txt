@@ -1,0 +1,22 @@
+1class Solution {
+2public:
+3    string complexNumberMultiply(string num1, string num2) {
+4        int a = 0, b = 0, c = 0, d = 0;
+5
+6        
+7        int pos1 = num1.find('+');
+8        a = stoi(num1.substr(0, pos1));
+9        b = stoi(num1.substr(pos1 + 1, num1.size() - pos1 - 2));
+10
+11        
+12        int pos2 = num2.find('+');
+13        c = stoi(num2.substr(0, pos2));
+14        d = stoi(num2.substr(pos2 + 1, num2.size() - pos2 - 2));
+15
+16        int real = a * c - b * d;
+17        int imag = a * d + b * c;
+18
+19        return to_string(real) + "+" + to_string(imag) + "i";
+20    }
+21};
+22
