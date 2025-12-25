@@ -1,0 +1,38 @@
+1class Solution {
+2public:
+3    int maxTwoEvents(vector<vector<int>>& events) {
+4        int n = events.size();
+5
+6        // sort by end time
+7        sort(events.begin(), events.end(),
+8             [](const vector<int>& a, const vector<int>& b) {
+9                 return a[1] < b[1];
+10             });
+11
+12        vector<int> endT(n), best(n);
+13
+14        for (int i = 0; i < n; i++) {
+15            endT[i] = events[i][1];
+16            best[i] = events[i][2];
+17            if (i > 0) best[i] = max(best[i], best[i - 1]);
+18        }
+19
+20        int ans = 0;
+21
+22        for (int i = 0; i < n; i++) {
+23            int st = events[i][0];
+24            int val = events[i][2];
+25
+26            // binary search: last event ending before st
+27            int idx = lower_bound(endT.begin(), endT.end(), st) - endT.begin() - 1;
+28
+29            if (idx >= 0) {
+30                ans = max(ans, val + best[idx]);
+31            }
+32
+33            ans = max(ans, val); // single event case
+34        }
+35
+36        return ans;
+37    }
+38};
