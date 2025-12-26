@@ -1,0 +1,18 @@
+1class Solution {
+2public:
+3    long long totalScore(int hp, vector<int>& damage, vector<int>& requirement) {
+4        // take care of indexing, prefer 1-based for prefix sum array
+5        int n = damage.size();
+6        vector<long long> ps(n + 1);
+7        for (int i = 1; i <= n; i++) ps[i] = ps[i - 1] + damage[i - 1];
+8        long long ans = 0;
+9        for (int i = 1; i <= n; i++) {
+10            int c = requirement[i - 1] - hp + ps[i];
+11            int idx = lower_bound(ps.begin(), ps.begin() + i + 1, c) - ps.begin();
+12            idx = min(idx, i);
+13            ans += (i - idx);
+14        }
+15
+16        return ans;
+17    }
+18};
