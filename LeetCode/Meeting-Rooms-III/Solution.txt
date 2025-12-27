@@ -1,0 +1,45 @@
+1using ll = long long;
+2
+3class Solution {
+4public:
+5    int mostBooked(int n, vector<vector<int>>& meetings) {
+6        sort(meetings.begin(), meetings.end());
+7
+8        priority_queue<int, vector<int>, greater<int>> ready;
+9        priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<pair<ll,int>>> rooms;
+10
+11        for (int r = 0; r < n; r++){
+12            ready.push(r);
+13        }
+14
+15        vector<int> res(n, 0);
+16
+17        for (auto& mt : meetings){
+18            ll s = mt[0];
+19            ll e = mt[1];
+20
+21            while (!rooms.empty() && rooms.top().first <= s){
+22                int r = rooms.top().second;
+23                rooms.pop();
+24                ready.push(r);
+25            }
+26
+27            int r;
+28            if (!ready.empty()){
+29                r = ready.top();
+30                ready.pop();
+31                rooms.push({e, r});
+32            } else {
+33                auto top = rooms.top();
+34                rooms.pop();
+35                r = top.second;
+36                ll t = top.first;
+37                rooms.push({t + (e - s), r});
+38            }
+39
+40            res[r]++;
+41        }
+42
+43        return distance(res.begin(), max_element(res.begin(), res.end()));
+44    }
+45};
