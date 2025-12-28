@@ -1,0 +1,23 @@
+1class Solution {
+2public:
+3    long long maximumScore(vector<int>& nums) {
+4        int n=nums.size();
+5        if(n==0)
+6            return 0;
+7        long long ans=LLONG_MIN;
+8        long long prefixSum=0;
+9        vector<int>suffixMin(n);
+10        suffixMin[n-1]=nums[n-1];
+11        for(int i=n-2;i>=0;i--)
+12            {
+13                suffixMin[i]=min(nums[i],suffixMin[i+1]);
+14            }
+15        for(int i=0;i<n-1;i++)
+16            {
+17                prefixSum+=nums[i];
+18                long long score=prefixSum-suffixMin[i+1];
+19                ans=max(ans,score);
+20            }
+21        return ans;
+22    }
+23};
