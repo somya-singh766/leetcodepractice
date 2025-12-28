@@ -1,0 +1,20 @@
+1class Solution {
+2public:
+3    long long minimumCost(int cost1, int cost2, int costBoth, int need1, int need2) {
+4        long long total=LLONG_MAX;
+5        long long sum1=0,sum2=0,sum3=0;
+6        sum1=1LL*cost1*need1+1LL*cost2*need2;
+7        int need=max(need1,need2);
+8        int needi=abs(need1-need2);
+9        if(need1>need2)
+10        {
+11            sum3=(1LL*need2*costBoth)+(1LL*needi*cost1);
+12        }
+13        else{
+14            sum3=(1LL*need1*costBoth)+(1LL*needi*cost2);
+15        }
+16        sum2=1LL*need*costBoth;
+17        total=min(sum1,min(sum2,sum3));
+18        return total;
+19    }
+20};
