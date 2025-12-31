@@ -1,0 +1,45 @@
+1class Solution {
+2public:
+3    vector<int> p, r;
+4
+5    int find(int x) {
+6        return p[x] == x ? x : p[x] = find(p[x]);
+7    }
+8
+9    void unite(int a, int b) {
+10        a = find(a); b = find(b);
+11        if (a == b) return;
+12        if (r[a] < r[b]) p[a] = b;
+13        else if (r[a] > r[b]) p[b] = a;
+14        else { p[b] = a; r[a]++; }
+15    }
+16
+17    int latestDayToCross(int row, int col, vector<vector<int>>& cells) {
+18        int n = row * col, top = n, bottom = n + 1;
+19        p.resize(n + 2); r.assign(n + 2, 0);
+20        vector<bool> land(n, false);
+21        iota(p.begin(), p.end(), 0);
+22
+23        int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+24
+25        for (int d = cells.size() - 1; d >= 0; d--) {
+26            int r0 = cells[d][0] - 1, c0 = cells[d][1] - 1;
+27            int id = r0 * col + c0;
+28            land[id] = true;
+29
+30            for (auto& di : dir) {
+31                int nr = r0 + di[0], nc = c0 + di[1];
+32                if (nr >= 0 && nc >= 0 && nr < row && nc < col) {
+33                    int nid = nr * col + nc;
+34                    if (land[nid]) unite(id, nid);
+35                }
+36            }
+37
+38            if (r0 == 0) unite(id, top);
+39            if (r0 == row - 1) unite(id, bottom);
+40
+41            if (find(top) == find(bottom)) return d;
+42        }
+43        return 0;
+44    }
+45};
