@@ -1,10 +1,18 @@
 1class Solution {
 2public:
 3    vector<int> plusOne(vector<int>& digits) {
-4        int i = digits.size() - 1;
-5        while(i >= 0 && digits[i] == 9) digits[i--] = 0;
-6        if(i < 0) digits.push_back(0), i++;
-7        digits[i]++;
-8        return digits;
-9    }
-10};
+4        int n=digits.size();
+5        for(int i=n-1;i>=0;i--)
+6        {
+7            if(digits[i]<9)
+8            {
+9                digits[i]++;
+10                return digits;
+11            }
+12            digits[i]=0;
+13        }
+14        digits.insert(digits.begin(), 1);
+15        return digits;
+16
+17    }
+18};
