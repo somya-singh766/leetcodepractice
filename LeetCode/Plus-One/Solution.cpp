@@ -11,8 +11,9 @@
 11            }
 12            digits[i]=0;
 13        }
-14        digits.insert(digits.begin(), 1);
-15        return digits;
-16
-17    }
-18};
+14         vector<int> ans(n + 1, 0);
+15        ans[0] = 1;
+16        return ans;
+17
+18    }
+19};
