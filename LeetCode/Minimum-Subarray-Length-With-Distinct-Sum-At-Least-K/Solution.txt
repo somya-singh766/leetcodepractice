@@ -1,0 +1,36 @@
+1class Solution {
+2public:
+3    int minLength(vector<int>& nums, int k) {
+4        unordered_map<int,int> freq;
+5        int n=nums.size();
+6        int l=0;
+7        long long sum=0;
+8        int ans=INT_MAX;
+9        for(int i=0;i<n;i++)
+10            {
+11                if(freq[nums[i]]==0)
+12                {
+13                    sum+=nums[i];
+14                }
+15                freq[nums[i]]++;
+16                while(sum>=k)
+17                    {
+18                        ans=min(ans,i-l+1);
+19                        freq[nums[l]]--;
+20                        if(freq[nums[l]]==0)
+21                            {
+22                            sum-=nums[l];
+23                            }
+24                        l++;
+25                    }
+26            }
+27          if(ans==INT_MAX)
+28          {
+29              return -1;
+30              
+31          }
+32        else{
+33            return ans;
+34        }
+35    }
+36};
