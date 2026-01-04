@@ -1,0 +1,37 @@
+1class Solution {
+2public:
+3    int sumFourDivisors(vector<int>& nums) {
+4        int res = 0;
+5        for (int n : nums) {
+6            int val = sumOne(n);
+7            if (val != -1) res += val;
+8        }
+9        return res;
+10    }
+11
+12    int sumOne(int n) {
+13        int p = round(cbrt(n));
+14        if ((long long)p * p * p == n && isPrime(p)) {
+15            return 1 + p + p*p + p*p*p;
+16        }
+17
+18        for (int i = 2; i * i <= n; i++) {
+19            if (n % i == 0) {
+20                int a = i, b = n / i;
+21                if (a != b && isPrime(a) && isPrime(b)) {
+22                    return 1 + a + b + n;
+23                }
+24                return -1;
+25            }
+26        }
+27        return -1;
+28    }
+29
+30    bool isPrime(int x) {
+31        if (x < 2) return false;
+32        for (int i = 2; i * i <= x; i++) {
+33            if (x % i == 0) return false;
+34        }
+35        return true;
+36    }
+37};
