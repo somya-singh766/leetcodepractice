@@ -1,0 +1,19 @@
+1class Solution {
+2public:
+3    long long maxMatrixSum(vector<vector<int>>& matrix) {
+4        long long totalSum = 0;
+5        int neg = 0;
+6        int minAbs = INT_MAX;
+7
+8        for (auto& row : matrix) {
+9            for (int v : row) {
+10                if (v < 0) neg++;
+11                int av = abs(v);
+12                totalSum += av;
+13                minAbs = min(minAbs, av);
+14            }
+15        }
+16
+17        return (neg % 2 == 0) ? totalSum : totalSum - 2LL * minAbs;
+18    }
+19};
