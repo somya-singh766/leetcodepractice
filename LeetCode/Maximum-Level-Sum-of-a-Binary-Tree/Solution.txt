@@ -1,0 +1,99 @@
+1/**
+2 * Definition for a binary tree node.
+3 * struct TreeNode {
+4 *     int val;
+5 *     TreeNode *left;
+6 *     TreeNode *right;
+7 *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+8 *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+9 *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+10 * };
+11 */
+12
+13 
+14//Approach-1 (Using BFS - T.C : O(n))
+15class Solution {
+16public:
+17    int maxLevelSum(TreeNode* root) {
+18        int maxSum = INT_MIN;
+19        int resultLevel = 0;
+20        int currLevel = 1;
+21        
+22        queue<TreeNode*> que;
+23        que.push(root);
+24        
+25        
+26        while(!que.empty()) {
+27
+28            int n = que.size();
+29            
+30            int sum = 0;
+31            
+32            while(n--) {
+33                
+34                TreeNode* node = que.front();
+35                que.pop();
+36                
+37                sum += node->val;
+38                
+39                if(node->left)
+40                    que.push(node->left);
+41                
+42                if(node->right)
+43                    que.push(node->right);
+44            }
+45            
+46            if(sum > maxSum) {
+47                maxSum = sum;
+48                resultLevel = currLevel;
+49            }
+50            currLevel++;
+51        }
+52        
+53        return resultLevel;
+54        
+55    }
+56};
+57
+58
+59// //Approach-2 (Using DFS - T.C : O(n))
+60// class Solution {
+61// public:
+62    
+63//     map<int, int> mp;
+64    
+65//     void DFS(TreeNode* root, int currLevel) {
+66        
+67//         if(!root)
+68//             return;
+69        
+70//         mp[currLevel] += root->val;
+71        
+72//         DFS(root->left, currLevel+1);
+73//         DFS(root->right, currLevel+1);
+74        
+75//     }
+76    
+77//     int maxLevelSum(TreeNode* root) {
+78//         mp.clear();
+79        
+80//         DFS(root, 1);
+81        
+82//         int maxSum = INT_MIN;
+83//         int result = 0;
+84        
+85//         for(auto &it : mp) {
+86            
+87//             int level = it.first;
+88//             int sum   = it.second;
+89            
+90//             if(sum > maxSum) {
+91//                 maxSum = sum;
+92//                 result = level;
+93//             }
+94            
+95//         }
+96        
+97//         return result;
+98//     }
+99// };
