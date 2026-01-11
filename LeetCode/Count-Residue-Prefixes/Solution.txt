@@ -1,0 +1,22 @@
+1class Solution {
+2public:
+3    int residuePrefixes(string s) {
+4        vector<int>freq(26,0);
+5        int dis=0;
+6        int count=0;
+7        for(int i=0;i<s.size();i++)
+8            {
+9                if(freq[s[i]-'a']==0)
+10                {
+11                    dis++;
+12                }
+13                freq[s[i]-'a']++;
+14                int len=i+1;
+15                if(dis==(len%3))
+16                {
+17                    count++;
+18                }
+19            }
+20        return count;
+21    }
+22};
